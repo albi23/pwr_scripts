@@ -5,8 +5,8 @@ if [[ $# -lt 2 ]]; then
 	exit 1;
 fi
 
-login="244951"					#your login to zawada page
-password="41kHRSgCNH"		# -- || -- password
+login=""		#your login to zawada page
+password=""		# -- || -- password
 
 if [[ ${#login} -lt 6 || ${#password} -lt 1 ]]; then
 	echo "Please assign correct login and password to variables";
@@ -21,13 +21,13 @@ targets=($(grep -o -i '[[:alnum:]]*\.png' index.html))
 arraylength=${#targets[@]}
 for (( i=0; i<${arraylength}; i++ )); do
    wget --header="Authorization: Basic $auth" -q -c -O "$2$i.png" "$correctLink${targets[$i]}"
-	 echo -e "\033[1m\e[34mDownloaded ${targets[$i]} as $i.png \e[39m"
-	 targets[$i]="$2$i.png"
+   echo -e "\033[1m\e[34mDownloaded ${targets[$i]} as $i.png \e[39m"
+   targets[$i]="$2$i.png"
 done
 
 rm index.html
 
 if [ "$3" = "pdf" ]; then
-	  convert $(echo ${targets[@]} | sort -g) $2$(date +'%H_%M_%S')_output.pdf
-	  rm $(echo ${targets[@]} | sort -g)
+	convert $(echo ${targets[@]} | sort -g) $2$(date +'%H_%M_%S')_output.pdf
+	rm $(echo ${targets[@]} | sort -g)
 fi
